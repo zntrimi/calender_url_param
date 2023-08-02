@@ -4,25 +4,25 @@
     <title>YOMY!体験会予定追加リンク</title>
     <link href="http://fonts.googleapis.com/earlyaccess/notosansjp.css">
     <style>
-    button {
-        width: 100%;
-        padding: 20px;
-        margin: 10px 0;
-        font-size: 1.5em;
-    }
-
-    @media (min-width: 600px) {
-        button {
-            width: auto;
-            padding: 10px;
-            font-size: 1em;
-        }
-
-    }
-
-    body {
+            body {
     font-family: 'Noto Sans JP', sans-serif;
     }
+    button {
+            width: 100%;
+            padding: 50px;
+            margin: 10px 0;
+            font-size: 2em;
+        }
+
+        @media (min-width: 600px) {
+            button {
+                width: 100%;
+                padding: 25px;
+                margin: 10px 0;
+                font-size: 1.5em;
+            }
+        }
+
     </style>
     <script>
         function convertJapaneseDate(inputString) {
@@ -33,6 +33,7 @@
 
             if (!dateMatch || !timeMatch) {
                 throw new Error("Invalid input string format");
+                document.getElementById('dateResult').innerHTML = '変換された日付: Invalid input string format';
             }
 
             let month = dateMatch[1];
