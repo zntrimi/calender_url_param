@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>日付変換</title>
+    <script>
+        function convertJapaneseDate(inputString) {
+            let currentYear = new Date().getFullYear();
+
+            let dateMatch = inputString.match(/(\d+)月(\d+)日/);
+            let timeMatch = inputString.match(/(\d+):(\d+)/);
+
+            if (!dateMatch || !timeMatch) {
+                throw new Error("Invalid input string format");
+            }
+
+            let month = dateMatch[1];
+            let day = dateMatch[2];
+            let hour = timeMatch[1];
+            let minute = timeMatch[2];
+
+            let date = new Date(currentYear, month - 1, day, hour, minute);
+
+            let YYYYMMDD = date.getFullYear().toString() + (date.getMonth() + 1).toString().padStart(2, '0') +
+                date.getDate().toString().padStart(2, '0');
+            let HHMMSS = date.getHours().toString().padStart(2, '0') + date.getMinutes().toString().padStart(2, '0') + "00";
+
+            let datePlusOneHour = new Date(date);
+            datePlusOneHour.setHours(date.getHours() + 1);
+
+            let YYYYMMDDplusOne = datePlusOneHour.getFullYear().toString() + (datePlusOneHour.getMonth() + 1).toString().padStart(2, '0') +
+                datePlusOneHour.getDate().toString().padStart(2, '0');
+            let HHMMSSplusOne = datePlusOneHour.getHours().toString().padStart(2, '0') + datePlusOneHour.getMinutes().toString().padStart(2, '0') + "00";
+
+            return [YYYYMMDD, HHMMSS, YYYYMMDDplusOne, HHMMSSplusOne];
+        }
+
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const dateParam = decodeURIComponent(urlParams.get('date'));
+
+            const convertedDate = convertJapaneseDate(dateParam);
+
+            let googleUrl = "https://www.google.com/calendar/render?action=TEMPLATE&text=YOMY%21+TRIAL&details=%7Bdescription%7D&dates="
+                + convertedDate[0] + "T" + convertedDate[1] + "%2F" + convertedDate[2] + "T" + convertedDate[3] + "&ctz=Asia%2FTokyo";
+            let timetreeUrl = "https://timetr.ee/ne?category=1&title=YOMY%20TRIAL&start_at="
+                + convertedDate[0] + "T" + convertedDate[1] + "%2B0900&end_at=" + convertedDate[2] + "T" + convertedDate[3] + "%2B0900&all_day=0";
+            let yahooUrl = "https://calendar.yahoo.co.jp/?v=60&TITLE=YOMYTRIAL&ST=" + convertedDate[0] + "T" + convertedDate[1] +
+                "&ET=" + convertedDate[2] + "T" + convertedDate[3] + "&DESC=%7Bdescription%7D";
+
+            document.getElementById('googleLink').href = googleUrl;
+            document.getElementById('timetreeLink').href = timetreeUrl;
+            document.getElementById('yahooLink').href = yahooUrl;
+
+            document.getElementById('dateResult').innerHTML = '変換された日付: ' + convertedDate[0] + ', ' + convertedDate[1].slice(0,2) + ":" + convertedDate[1].slice(2,4) + ":" + "00";
+        };
+    </script>
+</head>
+<body>
+    <h1>日付変換結果</h1>
+    <div id="dateResult"></div>
+    <a id="googleLink" target="_blank"><button>Google Calender</button></a>
+    <a id="timetreeLink" target="_blank"><button>TimeTree</button></a>
+    <a id="yahooLink" target="_blank"><button>Yahoo Calendar</button></a>
+</body>
+</html>
