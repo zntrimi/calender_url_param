@@ -1,7 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>日付変換</title>
+    <title>YOMY!体験会予定追加リンク</title>
+    <link href="http://fonts.googleapis.com/earlyaccess/notosansjp.css">
+    <style>
+    button {
+        width: 100%;
+        padding: 20px;
+        margin: 10px 0;
+        font-size: 1.5em;
+    }
+
+    @media (min-width: 600px) {
+        button {
+            width: auto;
+            padding: 10px;
+            font-size: 1em;
+        }
+
+    }
+
+    body {
+    font-family: 'Noto Sans JP', sans-serif;
+    }
+    </style>
     <script>
         function convertJapaneseDate(inputString) {
             let currentYear = new Date().getFullYear();
@@ -56,7 +78,7 @@
     </script>
 </head>
 <body>
-    <h1>日付変換結果</h1>
+    <h1>YOMY!体験会予定追加リンク</h1>
     <div id="dateResult"></div>
     <a id="googleLink" target="_blank"><button>Google Calender</button></a>
     <a id="timetreeLink" target="_blank"><button>TimeTree</button></a>
